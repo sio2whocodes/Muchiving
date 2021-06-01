@@ -11,6 +11,7 @@ class CreateViewController: UIViewController {
     var tags = ["카페","성신여대","돈암동"] //db에서 원래 있던 태그 불러오기
     var postTitle = "가게 이름"
     var postMemo = "한줄평"
+    var placeName = "장소 추가"
     
 //    let newPost = Post(from: )
     let encoder = JSONEncoder()
@@ -20,6 +21,7 @@ class CreateViewController: UIViewController {
     @IBOutlet weak var tagCollectionView: UICollectionView!
     @IBOutlet weak var memoTextView: UITextView!
     @IBOutlet weak var sampleImage: UIImageView!
+    @IBOutlet weak var addLocationBtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +29,12 @@ class CreateViewController: UIViewController {
         picker.delegate = self
         encoder.outputFormatting = .prettyPrinted
         
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("v1")
+        print(placeName)
+        addLocationBtn.setTitle(placeName, for: .normal)
     }
     
     @IBAction func addLocationButton(_ sender: Any) {
@@ -37,6 +44,7 @@ class CreateViewController: UIViewController {
     @IBAction func createPost(_ sender: Any) {
         let newPost = Post(title: postTitle, memo: postMemo, created_at: Date())
         print(newPost)
+        /*
         do {
             let data = try encoder.encode(newPost)
             print(String(data: data, encoding: .utf8)!)
@@ -46,7 +54,7 @@ class CreateViewController: UIViewController {
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
             do{
-                request.httpBody = try JSONSerialization.jsonObject(with: data, options: []) as! Data
+                request.httpBody = try JSONSerialization.data(withJSONObject: data, options: [.prettyPrinted])
                 request.addValue("application/json", forHTTPHeaderField: "Content-Type")
                 request.addValue("application/json", forHTTPHeaderField: "Accept-Type")
                 let session = URLSession.shared
@@ -60,7 +68,7 @@ class CreateViewController: UIViewController {
         } catch {
             print(error.localizedDescription)
         }
-        
+        */
         
     }
     
@@ -92,6 +100,8 @@ extension CreateViewController: UITextViewDelegate {
         postMemo = textView.text
         print("end")
     }
+    
+    
 }
 
 extension CreateViewController: UITextFieldDelegate {
@@ -102,8 +112,9 @@ extension CreateViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 //        print("textFieldShouldReturn \((textField.text) ?? "Empty")")
-        textField.endEditing(true)
-//        textField.resignFirstResponder()
+        print("d")
+//        textField.endEditing(true)
+        textField.resignFirstResponder()
         // Process of closing the Keyboard when the line feed button is pressed. textField.resignFirstResponder()
         return true
     }
