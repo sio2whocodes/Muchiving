@@ -9,9 +9,11 @@ import UIKit
 import BSImagePicker
 import Photos
 import Cosmos
+import TTGTagCollectionView
 
 class CreateViewController: UIViewController {
-    var tags = ["카페","성신여대","돈암동"] //db에서 원래 있던 태그 불러오기
+    var tags = ["카페","성신여대","돈암동","카페","성신여대","돈암동","카페","성신여대","돈암동"] //db에서 원래 있던 태그 불러오기
+    var selectedTags: [String] = []
     var postTitle = "가게 이름"
     var postMemo = "한줄평"
     var location = "장소 추가"
@@ -20,20 +22,19 @@ class CreateViewController: UIViewController {
     
 //    let newPost = Post(from: )
     let encoder = JSONEncoder()
-//    let picker = UIImagePickerController()
     let imagePicker = ImagePickerController()
 
     @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var tagCollectionView: UICollectionView!
     @IBOutlet weak var imgCollectionView: UICollectionView!
     @IBOutlet weak var memoTextView: UITextView!
     @IBOutlet weak var addLocationBtn: UIButton!
     @IBOutlet weak var cosmosView: CosmosView!
-    
-    
-    
+    @IBOutlet weak var addTagBtn: UIButton!
+    var tagView =  TTGTextTagCollectionView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        setTagCollectionView()
         encoder.outputFormatting = .prettyPrinted
         cosmosView.didFinishTouchingCosmos = { rating in
             self.score = self.cosmosView.rating
@@ -47,14 +48,57 @@ class CreateViewController: UIViewController {
         cosmosView.rating = 3.5
     }
     
+    func setUI(){
+        
+    }
+    
+    func setTagCollectionView(){
+        tagView = TTGTextTagCollectionView.init(frame: CGRect.init(x: addTagBtn.frame.maxX + 10, y: titleTextField.frame.maxY+15, width: view.bounds.width - (addTagBtn.frame.width + 35), height: 40))
+        self.view.addSubview(tagView)
+        tagView.scrollDirection = .horizontal
+        for text in tags {
+            let content = TTGTextTagStringContent.init(text: text)
+            content.textColor = UIColor.white
+            content.textFont = UIFont.systemFont(ofSize: 20)
+            
+            let normalStyle = TTGTextTagStyle.init()
+            normalStyle.backgroundColor = UIColor(named: "mainColor") ?? UIColor.yellow
+            normalStyle.extraSpace = CGSize.init(width: 8, height: 8)
+            
+            let selectedStyle = TTGTextTagStyle.init()
+            selectedStyle.backgroundColor = UIColor(named: "pointColor") ?? UIColor(displayP3Red: 133/255, green: 110/255, blue: 155/255, alpha: 1)
+            selectedStyle.extraSpace = CGSize.init(width: 8, height: 8)
+            
+            let tag = TTGTextTag.init()
+            tag.content = content
+            tag.style = normalStyle
+            tag.selectedStyle = selectedStyle
+            
+            tagView.addTag(tag)
+        }
+        tagView.reload()
+    }
+    
+    
+    
     @IBAction func addLocationButton(_ sender: Any) {
         //지도 api 연결
+    }
+    
+    func tagToString(selectedTags: [TTGTextTag])->[String] {
+        var tagList: [String] = []
+        for tag in selectedTags {
+            tagList.append(tag.content.getAttributedString().string)
+        }
+        return tagList
     }
     
     
     @IBAction func createPost(_ sender: Any) {
         location = addLocationBtn.currentTitle!
-        let newPost = Post(title: postTitle, memo: postMemo, location: location, score: Float(score), created_at: Date())
+        selectedTags = tagToString(selectedTags: tagView.allSelectedTags())
+        
+        let newPost = Post(title: postTitle, memo: postMemo, tags: selectedTags, location: location, score: Float(score), created_at: Date())
         print(newPost)
         /*
         do {
@@ -85,7 +129,6 @@ class CreateViewController: UIViewController {
     }
     
     @IBAction func addImageButton(_ sender: Any) {
-//        present(picker, animated: true, completion: nil)
         imagePicker.settings.selection.max = 4
         
         presentImagePicker(imagePicker, select: { (asset) in
@@ -96,14 +139,16 @@ class CreateViewController: UIViewController {
             // User canceled selection.
         }, finish: { (assets) in
             // User finished selection assets.
+            var imgList:[Data] = []
             for asset in assets {
                 PHImageManager.default().requestImage(for: asset,
                                                       targetSize: PHImageManagerMaximumSize,
                                                       contentMode: .aspectFill,
                                                       options: nil) { (image, info) in
-                    self.imgs.append((image?.jpegData(compressionQuality: 0.7))!)
+                    imgList.append((image?.jpegData(compressionQuality: 0.7))!)
                 }
             }
+            self.imgs = imgList
             self.imgCollectionView.reloadData()
         })
     }
@@ -112,8 +157,12 @@ class CreateViewController: UIViewController {
     
 }
 
+extension CreateViewController: TTGTextTagCollectionViewDelegate {
+    func textTagCollectionView(_ textTagCollectionView: TTGTextTagCollectionView!, didTap tag: TTGTextTag!, at index: UInt) {
+    }
+    
+}
 extension CreateViewController: UITextViewDelegate {
-    //화면 터치 시 완료로 바꾸기
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
@@ -151,36 +200,18 @@ extension CreateViewController: UICollectionViewDelegate{
 
 extension CreateViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == tagCollectionView {
-            return tags.count
-        } else {
-            return imgs.count
-        }
+        return imgs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == tagCollectionView {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagcell", for: indexPath) as? TagCell else {
-                return UICollectionViewCell()
-            }
-            cell.tagLabel.text = tags[indexPath.item]
-            return cell
-        } else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imgcell", for: indexPath) as? ImgCell else {
-                return UICollectionViewCell()
-            }
-            cell.imgView.image = UIImage(data: imgs[indexPath.item])
-            return cell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imgcell", for: indexPath) as? ImgCell else {
+            return UICollectionViewCell()
         }
-        
+        cell.imgView.image = UIImage(data: imgs[indexPath.item])
+        return cell
     }
     
     
-}
-
-class TagCell: UICollectionViewCell {
-    @IBOutlet weak var tagView: UIView!
-    @IBOutlet weak var tagLabel: UILabel!
 }
 
 class ImgCell: UICollectionViewCell {
