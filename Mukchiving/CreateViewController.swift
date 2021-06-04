@@ -12,7 +12,7 @@ import Cosmos
 import TTGTagCollectionView
 
 class CreateViewController: UIViewController {
-    var tags = ["카페","성신여대","돈암동","카페","성신여대","돈암동","카페","성신여대","돈암동"] //db에서 원래 있던 태그 불러오기
+    var tags = ["카페","성신여대","돈암동", "리조또","분당","양식"] //db에서 원래 있던 태그 불러오기
     var selectedTags: [String] = []
     var postTitle = "가게 이름"
     var postMemo = "한줄평"
@@ -30,6 +30,8 @@ class CreateViewController: UIViewController {
     @IBOutlet weak var addLocationBtn: UIButton!
     @IBOutlet weak var cosmosView: CosmosView!
     @IBOutlet weak var addTagBtn: UIButton!
+    
+    @IBOutlet weak var addImgBtn: UIButton!
     var tagView =  TTGTextTagCollectionView()
 
     override func viewDidLoad() {
@@ -39,6 +41,7 @@ class CreateViewController: UIViewController {
         cosmosView.didFinishTouchingCosmos = { rating in
             self.score = self.cosmosView.rating
         }
+        setUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,14 +49,21 @@ class CreateViewController: UIViewController {
         addLocationBtn.setTitle(location, for: .normal)
         titleTextField.placeholder = "가게이름"
         cosmosView.rating = 3.5
+        addLocationBtn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        addLocationBtn.layer.cornerRadius = 5
     }
     
     func setUI(){
-        
+        addTagBtn.layer.cornerRadius = 5
+        addTagBtn.layer.borderWidth = 1.5
+        addTagBtn.layer.borderColor = CGColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
+        addImgBtn.layer.cornerRadius = 5
+        memoTextView.layer.cornerRadius = 5
+//        memoTextView.backgroundColor = UIColor.lightGray
     }
     
     func setTagCollectionView(){
-        tagView = TTGTextTagCollectionView.init(frame: CGRect.init(x: addTagBtn.frame.maxX + 10, y: titleTextField.frame.maxY+15, width: view.bounds.width - (addTagBtn.frame.width + 35), height: 40))
+        tagView = TTGTextTagCollectionView.init(frame: CGRect.init(x: addTagBtn.frame.maxX + 5 , y: titleTextField.frame.maxY+14, width: view.bounds.width - (addTagBtn.frame.width + 35), height: 40))
         self.view.addSubview(tagView)
         tagView.scrollDirection = .horizontal
         for text in tags {
@@ -63,12 +73,14 @@ class CreateViewController: UIViewController {
             
             let normalStyle = TTGTextTagStyle.init()
             normalStyle.backgroundColor = UIColor(named: "mainColor") ?? UIColor.yellow
-            normalStyle.extraSpace = CGSize.init(width: 8, height: 8)
+            normalStyle.extraSpace = CGSize.init(width: 8, height: 10)
+            normalStyle.shadowOpacity = 0
             
             let selectedStyle = TTGTextTagStyle.init()
             selectedStyle.backgroundColor = UIColor(named: "pointColor") ?? UIColor(displayP3Red: 133/255, green: 110/255, blue: 155/255, alpha: 1)
-            selectedStyle.extraSpace = CGSize.init(width: 8, height: 8)
-            
+            selectedStyle.extraSpace = CGSize.init(width: 8, height: 10)
+            selectedStyle.shadowOpacity = 0
+
             let tag = TTGTextTag.init()
             tag.content = content
             tag.style = normalStyle
@@ -79,6 +91,48 @@ class CreateViewController: UIViewController {
         tagView.reload()
     }
     
+    func addNewTag(text: String) -> TTGTextTag{
+        let content = TTGTextTagStringContent.init(text: text)
+        content.textColor = UIColor.white
+        content.textFont = UIFont.systemFont(ofSize: 20)
+        
+        let normalStyle = TTGTextTagStyle.init()
+        normalStyle.backgroundColor = UIColor(named: "mainColor") ?? UIColor.yellow
+        normalStyle.extraSpace = CGSize.init(width: 8, height: 8)
+        normalStyle.shadowOpacity = 0
+
+        let selectedStyle = TTGTextTagStyle.init()
+        selectedStyle.backgroundColor = UIColor(named: "pointColor") ?? UIColor(displayP3Red: 133/255, green: 110/255, blue: 155/255, alpha: 1)
+        selectedStyle.extraSpace = CGSize.init(width: 8, height: 8)
+        selectedStyle.shadowOpacity = 0
+
+        let tag = TTGTextTag.init()
+        tag.content = content
+        tag.style = normalStyle
+        tag.selectedStyle = selectedStyle
+        
+        return tag
+    }
+    
+    
+    @IBAction func addTagButton(_ sender: Any) {
+        let alert = UIAlertController(title: "태그 추가", message: "추가할 태그를 입력하세요.", preferredStyle: .alert)
+        alert.addTextField(configurationHandler: nil)
+        let add = UIAlertAction(title: "추가", style: .default) {_ in
+            if let newTag = alert.textFields?[0].text {
+                if newTag != "" {
+                    self.tags.append(newTag)
+                    self.tagView.addTag(self.addNewTag(text: newTag))
+                    self.tagView.reload()
+                }
+            }
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alert.addAction(add)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
+        
+    }
     
     
     @IBAction func addLocationButton(_ sender: Any) {
@@ -208,6 +262,7 @@ extension CreateViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         cell.imgView.image = UIImage(data: imgs[indexPath.item])
+        cell.imgView.layer.cornerRadius = 5
         return cell
     }
     

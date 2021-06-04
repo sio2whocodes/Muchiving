@@ -153,13 +153,13 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IWi-R8-VHK">
-                                <rect key="frame" x="188" y="222" width="73" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IWi-R8-VHK">
+                                <rect key="frame" x="188" y="222" width="56" height="30"/>
                                 <color key="backgroundColor" red="0.95439606899999996" green="0.75371390579999997" blue="0.34891277549999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="emL-Bx-fQQ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="장소 추가">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -169,15 +169,19 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T41-Vx-dJY">
-                                <rect key="frame" x="20" y="174" width="60" height="40"/>
+                                <rect key="frame" x="20" y="174" width="50" height="36"/>
                                 <color key="backgroundColor" red="0.52219945189999994" green="0.43162399530000001" blue="0.60786223409999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="T41-Vx-dJY" secondAttribute="height" multiplier="3:2" id="MKW-kI-Bkh"/>
-                                    <constraint firstAttribute="height" constant="40" id="arN-iQ-WqP"/>
+                                    <constraint firstAttribute="height" constant="36" id="arN-iQ-WqP"/>
+                                    <constraint firstAttribute="width" constant="50" id="d4K-7G-dkT"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="추가">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="addTagButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yEu-Sk-hlj"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -185,9 +189,9 @@
                         <constraints>
                             <constraint firstItem="luV-tz-Qvh" firstAttribute="top" secondItem="Q0b-EN-gGH" secondAttribute="bottom" constant="8" symbolic="YES" id="2b8-WZ-aRs"/>
                             <constraint firstItem="dTc-VF-eKg" firstAttribute="trailing" secondItem="do0-m7-lcT" secondAttribute="trailing" id="7EP-iH-Y5P"/>
-                            <constraint firstItem="IWi-R8-VHK" firstAttribute="top" secondItem="T41-Vx-dJY" secondAttribute="bottom" constant="8" symbolic="YES" id="E3w-cY-nWM"/>
+                            <constraint firstItem="IWi-R8-VHK" firstAttribute="top" secondItem="T41-Vx-dJY" secondAttribute="bottom" constant="12" id="E3w-cY-nWM"/>
                             <constraint firstItem="rcH-gZ-RGb" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="HgT-BA-cBa"/>
-                            <constraint firstItem="Q0b-EN-gGH" firstAttribute="top" secondItem="T41-Vx-dJY" secondAttribute="bottom" constant="8" symbolic="YES" id="QLU-NX-V4O"/>
+                            <constraint firstItem="Q0b-EN-gGH" firstAttribute="top" secondItem="T41-Vx-dJY" secondAttribute="bottom" constant="12" id="QLU-NX-V4O"/>
                             <constraint firstItem="luV-tz-Qvh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="RhB-tt-aY1"/>
                             <constraint firstItem="IPH-QZ-iqO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="T35-NU-XsM"/>
                             <constraint firstItem="dTc-VF-eKg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="WDU-v4-1Hb"/>
@@ -207,6 +211,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="QNy-UT-sV0"/>
                     <connections>
+                        <outlet property="addImgBtn" destination="Vzl-sC-41L" id="gZF-Zj-yyK"/>
                         <outlet property="addLocationBtn" destination="IWi-R8-VHK" id="CGU-xr-OQy"/>
                         <outlet property="addTagBtn" destination="T41-Vx-dJY" id="TFp-EQ-372"/>
                         <outlet property="cosmosView" destination="Q0b-EN-gGH" id="kqw-vQ-5a0"/>
