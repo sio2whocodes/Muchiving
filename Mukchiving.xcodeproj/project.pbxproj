@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C5732853AAE3B9594C5754CB /* Pods_Mukchiving.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC204132FED5F125F1F39DC1 /* Pods_Mukchiving.framework */; };
 		DE1588122664711A00F765CD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1588112664711A00F765CD /* LoginViewController.swift */; };
 		DE1588162664A2FA00F765CD /* LocationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1588152664A2FA00F765CD /* LocationSearchViewController.swift */; };
 		DE3031A42654EED5007AB921 /* CreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3031A32654EED5007AB921 /* CreateViewController.swift */; };
@@ -24,6 +25,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		59F3D3069E2141649A1A1996 /* Pods-Mukchiving.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mukchiving.debug.xcconfig"; path = "Target Support Files/Pods-Mukchiving/Pods-Mukchiving.debug.xcconfig"; sourceTree = "<group>"; };
+		BC204132FED5F125F1F39DC1 /* Pods_Mukchiving.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mukchiving.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C39B09EA81B43B4471658C52 /* Pods-Mukchiving.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mukchiving.release.xcconfig"; path = "Target Support Files/Pods-Mukchiving/Pods-Mukchiving.release.xcconfig"; sourceTree = "<group>"; };
 		DE1588112664711A00F765CD /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DE1588152664A2FA00F765CD /* LocationSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchViewController.swift; sourceTree = "<group>"; };
 		DE3031A32654EED5007AB921 /* CreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateViewController.swift; sourceTree = "<group>"; };
@@ -47,17 +51,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5732853AAE3B9594C5754CB /* Pods_Mukchiving.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		98BD0F51489ADD1BA0F0E244 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BC204132FED5F125F1F39DC1 /* Pods_Mukchiving.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DDA6EF7D584F2F0C140F94E2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				59F3D3069E2141649A1A1996 /* Pods-Mukchiving.debug.xcconfig */,
+				C39B09EA81B43B4471658C52 /* Pods-Mukchiving.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		DEEF6DE7264A4724007406BF = {
 			isa = PBXGroup;
 			children = (
 				DEEF6DF2264A4724007406BF /* Mukchiving */,
 				DEEF6DF1264A4724007406BF /* Products */,
+				DDA6EF7D584F2F0C140F94E2 /* Pods */,
+				98BD0F51489ADD1BA0F0E244 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -98,9 +123,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DEEF6E07264A4726007406BF /* Build configuration list for PBXNativeTarget "Mukchiving" */;
 			buildPhases = (
+				3EE43D4EFB560EE0A0921546 /* [CP] Check Pods Manifest.lock */,
 				DEEF6DEC264A4724007406BF /* Sources */,
 				DEEF6DED264A4724007406BF /* Frameworks */,
 				DEEF6DEE264A4724007406BF /* Resources */,
+				ADD9AF68EF8B2ADDB9BE3BED /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -155,6 +182,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3EE43D4EFB560EE0A0921546 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Mukchiving-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ADD9AF68EF8B2ADDB9BE3BED /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Mukchiving/Pods-Mukchiving-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Mukchiving/Pods-Mukchiving-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Mukchiving/Pods-Mukchiving-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DEEF6DEC264A4724007406BF /* Sources */ = {
@@ -315,6 +384,7 @@
 		};
 		DEEF6E08264A4726007406BF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 59F3D3069E2141649A1A1996 /* Pods-Mukchiving.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -334,6 +404,7 @@
 		};
 		DEEF6E09264A4726007406BF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C39B09EA81B43B4471658C52 /* Pods-Mukchiving.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

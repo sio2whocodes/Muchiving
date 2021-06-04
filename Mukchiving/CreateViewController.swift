@@ -6,35 +6,41 @@
 //
 
 import UIKit
+import BSImagePicker
+import Photos
 
 class CreateViewController: UIViewController {
     var tags = ["카페","성신여대","돈암동"] //db에서 원래 있던 태그 불러오기
     var postTitle = "가게 이름"
     var postMemo = "한줄평"
-    var placeName = "장소 추가"
+    var location = "장소 추가"
+    var imgs: [Data] = []
     
 //    let newPost = Post(from: )
     let encoder = JSONEncoder()
-    let picker = UIImagePickerController()
+//    let picker = UIImagePickerController()
+    let imagePicker = ImagePickerController()
 
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var tagCollectionView: UICollectionView!
+    @IBOutlet weak var imgCollectionView: UICollectionView!
     @IBOutlet weak var memoTextView: UITextView!
     @IBOutlet weak var sampleImage: UIImageView!
     @IBOutlet weak var addLocationBtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        picker.sourceType = .photoLibrary
-        picker.delegate = self
+//        picker.sourceType = .photoLibrary
+//        picker.delegate = self
         encoder.outputFormatting = .prettyPrinted
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         print("v1")
-        print(placeName)
-        addLocationBtn.setTitle(placeName, for: .normal)
+        print(location)
+        addLocationBtn.setTitle(location, for: .normal)
+        titleTextField.placeholder = "가게이름"
     }
     
     @IBAction func addLocationButton(_ sender: Any) {
@@ -42,7 +48,8 @@ class CreateViewController: UIViewController {
     }
     
     @IBAction func createPost(_ sender: Any) {
-        let newPost = Post(title: postTitle, memo: postMemo, created_at: Date())
+        location = addLocationBtn.currentTitle!
+        let newPost = Post(title: postTitle, memo: postMemo, location: location, created_at: Date())
         print(newPost)
         /*
         do {
@@ -73,62 +80,65 @@ class CreateViewController: UIViewController {
     }
     
     @IBAction func addImageButton(_ sender: Any) {
-        present(picker, animated: true, completion: nil)
+//        present(picker, animated: true, completion: nil)
+        imagePicker.settings.selection.max = 4
+        
+        presentImagePicker(imagePicker, select: { (asset) in
+            // User selected an asset. Do something with it. Perhaps begin processing/upload?
+        }, deselect: { (asset) in
+            // User deselected an asset. Cancel whatever you did when asset was selected.
+        }, cancel: { (assets) in
+            // User canceled selection.
+        }, finish: { (assets) in
+            // User finished selection assets.
+            for asset in assets {
+                PHImageManager.default().requestImage(for: asset,
+                                                      targetSize: PHImageManagerMaximumSize,
+                                                      contentMode: .aspectFill,
+                                                      options: nil) { (image, info) in
+                    self.imgs.append((image?.jpegData(compressionQuality: 0.7))!)
+                }
+            }
+            self.imgCollectionView.reloadData()
+        })
     }
+    
+    
     
 }
 
 extension CreateViewController: UITextViewDelegate {
     //화면 터치 시 완료로 바꾸기
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
-            textView.resignFirstResponder()
-        }
-        return true
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
     
-    @objc func keyBoardWillShow(_ sender: Notification){
-        self.view.frame.origin.y = 0
-    }
-    
-    @objc func keyBoardWillHide(_ sender: Notification){
-        self.view.frame.origin.y = 0
-    }
     
     func textViewDidEndEditing(_ textView: UITextView) {
         postMemo = textView.text
         print("end")
     }
     
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        guard let str = textView.text else { return true }
+        let newLength = str.count + text.count - range.length
+        return newLength <= 450
+    }
     
 }
 
 extension CreateViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
-//        print("textFieldDidEndEditing: \((textField.text) ?? "Empty")")
-        print("end")
+        print("end!")
+        postTitle = titleTextField.text ?? "가게이름"
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        print("textFieldShouldReturn \((textField.text) ?? "Empty")")
-        print("d")
-//        textField.endEditing(true)
         textField.resignFirstResponder()
-        // Process of closing the Keyboard when the line feed button is pressed. textField.resignFirstResponder()
         return true
     }
 }
 
-extension CreateViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]){
-        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
-            sampleImage.image = image
-        }
-        dismiss(animated: true, completion: nil)
-    }
-}
 
 extension CreateViewController: UICollectionViewDelegate{
     
@@ -136,15 +146,28 @@ extension CreateViewController: UICollectionViewDelegate{
 
 extension CreateViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tags.count
+        if collectionView == tagCollectionView {
+            return tags.count
+        } else {
+            return imgs.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagcell", for: indexPath) as? TagCell else {
-            return UICollectionViewCell()
+        if collectionView == tagCollectionView {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagcell", for: indexPath) as? TagCell else {
+                return UICollectionViewCell()
+            }
+            cell.tagLabel.text = tags[indexPath.item]
+            return cell
+        } else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imgcell", for: indexPath) as? ImgCell else {
+                return UICollectionViewCell()
+            }
+            cell.imgView.image = UIImage(data: imgs[indexPath.item])
+            return cell
         }
-        cell.tagLabel.text = tags[indexPath.item]
-        return cell
+        
     }
     
     
@@ -153,4 +176,8 @@ extension CreateViewController: UICollectionViewDataSource {
 class TagCell: UICollectionViewCell {
     @IBOutlet weak var tagView: UIView!
     @IBOutlet weak var tagLabel: UILabel!
+}
+
+class ImgCell: UICollectionViewCell {
+    @IBOutlet weak var imgView: UIImageView!
 }

@@ -22,7 +22,7 @@ class LocationSearchViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         print(navigationController?.children[0])
         let vc = (navigationController?.children[0]) as! CreateViewController
-        vc.placeName = self.placeName
+        vc.location = self.placeName
     }
 }
 
@@ -48,14 +48,22 @@ extension LocationSearchViewController: UISearchBarDelegate {
             }
             if let data = data {
                 do {
-                    let json = try JSONSerialization.jsonObject(with: data, options: [.allowFragments,.mutableContainers]) as? NSDictionary
-//                    let jsonString = String(data: data, encoding: .utf8)
-                    DispatchQueue.main.async {
-                        let doc = json?.value(forKey: "documents") as? NSArray
-                        self.placeInfo = doc as? [NSDictionary] ?? []
-                        print("place : \(self.placeInfo[0].value(forKey: "place_name")!)")
-                        print("address : \(self.placeInfo[0].value(forKey: "address_name")!)")
-                        self.tableView.reloadData()
+                    if let json = try JSONSerialization.jsonObject(with: data, options: [.allowFragments,.mutableContainers]) as? NSDictionary {
+                        //let jsonString = String(data: data, encoding: .utf8)
+                        DispatchQueue.main.async {
+                            let doc = json.value(forKey: "documents") as? NSArray
+                            if(doc?.count ?? 0 > 0){
+                                self.placeInfo = doc as? [NSDictionary] ?? []
+                                print("place : \(self.placeInfo[0].value(forKey: "place_name")!)")
+                                print("address : \(self.placeInfo[0].value(forKey: "address_name")!)")
+                                self.tableView.reloadData()
+                            } else{
+                                self.placeInfo.removeAll()
+                                self.tableView.reloadData()
+                            }
+                        }
+                    } else {
+                        //검색 결과 없음
                     }
                 } catch {
                     print(error.localizedDescription)
@@ -67,7 +75,8 @@ extension LocationSearchViewController: UISearchBarDelegate {
 
 extension LocationSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        placeName = placeInfo[indexPath.row].value(forKey: "address_name") as! String
+        placeName = placeInfo[indexPath.row].value(forKey: "address_name")! as! String
+        print(placeName)
         self.navigationController?.popViewController(animated: true)
     }
 }
@@ -81,9 +90,8 @@ extension LocationSearchViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "localcell", for: indexPath) as? LocationCell else {
             return UITableViewCell()
         }
-        cell.placeNameLabel.text = placeInfo[indexPath.row].value(forKey: "place_name") as? String ?? "none"
-        cell.addressLabel.text = placeInfo[indexPath.row].value(forKey: "address_name") as? String ?? "-"
-        
+        cell.placeNameLabel.text = placeInfo[indexPath.row].value(forKey: "place_name") as? String
+        cell.addressLabel.text = placeInfo[indexPath.row].value(forKey: "address_name") as? String
         
         return cell
     }

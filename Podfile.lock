@@ -1,0 +1,24 @@
+PODS:
+  - BSImagePicker (3.3.1)
+  - Cosmos (23.0.0)
+  - TTGTagCollectionView (2.0.1)
+
+DEPENDENCIES:
+  - BSImagePicker (~> 3.1)
+  - Cosmos (~> 23.0)
+  - TTGTagCollectionView
+
+SPEC REPOS:
+  trunk:
+    - BSImagePicker
+    - Cosmos
+    - TTGTagCollectionView
+
+SPEC CHECKSUMS:
+  BSImagePicker: 0fe04b574d4d6b81093785d2af6c26227efc8428
+  Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
+  TTGTagCollectionView: 29d01ece199c257943ba490e9989734382cda5ae
+
+PODFILE CHECKSUM: 78ab1d198cf218432f7d9dabd5ee5ca58fbf50d6
+
+COCOAPODS: 1.10.1

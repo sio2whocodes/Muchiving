@@ -1,0 +1,4 @@
+${PODS_ROOT}/Target Support Files/Pods-Mukchiving/Pods-Mukchiving-frameworks.sh
+${BUILT_PRODUCTS_DIR}/BSImagePicker/BSImagePicker.framework
+${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework
+${BUILT_PRODUCTS_DIR}/TTGTagCollectionView/TTGTagCollectionView.framework
