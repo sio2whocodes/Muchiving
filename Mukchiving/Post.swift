@@ -14,6 +14,6 @@ struct Post: Codable {
     let memo: String
 //    let imgs: UIImage
     let location: String
-//    let score: Float
+    let score: Float
     let created_at: Date // or String
 }

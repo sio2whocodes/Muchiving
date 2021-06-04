@@ -8,6 +8,7 @@
 import UIKit
 import BSImagePicker
 import Photos
+import Cosmos
 
 class CreateViewController: UIViewController {
     var tags = ["카페","성신여대","돈암동"] //db에서 원래 있던 태그 불러오기
@@ -15,6 +16,7 @@ class CreateViewController: UIViewController {
     var postMemo = "한줄평"
     var location = "장소 추가"
     var imgs: [Data] = []
+    var score = 3.5
     
 //    let newPost = Post(from: )
     let encoder = JSONEncoder()
@@ -25,31 +27,34 @@ class CreateViewController: UIViewController {
     @IBOutlet weak var tagCollectionView: UICollectionView!
     @IBOutlet weak var imgCollectionView: UICollectionView!
     @IBOutlet weak var memoTextView: UITextView!
-    @IBOutlet weak var sampleImage: UIImageView!
     @IBOutlet weak var addLocationBtn: UIButton!
+    @IBOutlet weak var cosmosView: CosmosView!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        picker.sourceType = .photoLibrary
-//        picker.delegate = self
         encoder.outputFormatting = .prettyPrinted
-        
+        cosmosView.didFinishTouchingCosmos = { rating in
+            self.score = self.cosmosView.rating
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("v1")
         print(location)
         addLocationBtn.setTitle(location, for: .normal)
         titleTextField.placeholder = "가게이름"
+        cosmosView.rating = 3.5
     }
     
     @IBAction func addLocationButton(_ sender: Any) {
         //지도 api 연결
     }
     
+    
     @IBAction func createPost(_ sender: Any) {
         location = addLocationBtn.currentTitle!
-        let newPost = Post(title: postTitle, memo: postMemo, location: location, created_at: Date())
+        let newPost = Post(title: postTitle, memo: postMemo, location: location, score: Float(score), created_at: Date())
         print(newPost)
         /*
         do {

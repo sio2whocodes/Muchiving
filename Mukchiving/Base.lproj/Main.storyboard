@@ -93,46 +93,6 @@
                                 <rect key="frame" x="20" y="166" width="100" height="0.0"/>
                                 <color key="backgroundColor" red="0.95439606899999996" green="0.75371390579999997" blue="0.34891277549999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wgx-rH-y67">
-                                <rect key="frame" x="20" y="222" width="118" height="30"/>
-                                <color key="backgroundColor" red="0.95439606899999996" green="0.75371390579999997" blue="0.34891277549999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="⭐️⭐⭐⭐⭐"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IWi-R8-VHK">
-                                <rect key="frame" x="146" y="222" width="73" height="30"/>
-                                <color key="backgroundColor" red="0.95439606899999996" green="0.75371390579999997" blue="0.34891277549999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                <state key="normal" title="장소 추가">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="addLocationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6Ux-U4-cey"/>
-                                    <segue destination="Saq-VD-5y6" kind="show" id="RES-wp-0iN"/>
-                                </connections>
-                            </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" text="이곳에 가게에 대해 메모할 내용을 입력해주세요." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="luV-tz-Qvh">
-                                <rect key="frame" x="20" y="260" width="374" height="300"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="5F1-8V-7qN"/>
-                                </constraints>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" spellCheckingType="no" smartQuotesType="no"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="n8S-7f-3dr"/>
-                                </connections>
-                            </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vzl-sC-41L">
-                                <rect key="frame" x="20" y="568" width="64" height="30"/>
-                                <color key="backgroundColor" red="0.52219945189999994" green="0.43162399530000001" blue="0.60786223409999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <state key="normal" title=" 사진 추가 ">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="addImageButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6A5-N7-c79"/>
-                                </connections>
-                            </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="IPH-QZ-iqO">
                                 <rect key="frame" x="20" y="606" width="374" height="100"/>
                                 <color key="backgroundColor" red="0.96848803760000002" green="0.96501356360000001" blue="0.94509655240000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -174,30 +134,110 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="8Ut-9d-f5U"/>
                                 </connections>
                             </collectionView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" text="이곳에 가게에 대해 메모할 내용을 입력해주세요." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="luV-tz-Qvh">
+                                <rect key="frame" x="20" y="260" width="374" height="300"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="5F1-8V-7qN"/>
+                                </constraints>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" spellCheckingType="no" smartQuotesType="no"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="n8S-7f-3dr"/>
+                                </connections>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vzl-sC-41L">
+                                <rect key="frame" x="20" y="568" width="64" height="30"/>
+                                <color key="backgroundColor" red="0.52219945189999994" green="0.43162399530000001" blue="0.60786223409999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" title=" 사진 추가 ">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="addImageButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6A5-N7-c79"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q0b-EN-gGH" customClass="CosmosView" customModule="Cosmos">
+                                <rect key="frame" x="20" y="222" width="158" height="30"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="rating">
+                                        <real key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="totalStars">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="starSize">
+                                        <real key="value" value="30"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="filledColor">
+                                        <color key="value" red="0.95439606899999996" green="0.75371390579999997" blue="0.34891277549999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="emptyColor">
+                                        <color key="value" red="0.96848803760000002" green="0.96501356360000001" blue="0.94509655240000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="emptyBorderColor">
+                                        <color key="value" red="0.95439606899999996" green="0.75371390579999997" blue="0.34891277549999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="emptyBorderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="filledBorderColor">
+                                        <color key="value" red="0.95439606899999996" green="0.75371390579999997" blue="0.34891277549999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="filledBorderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="starMargin">
+                                        <real key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="fillMode">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="textSize">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="textMargin">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="minTouchRating">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IWi-R8-VHK">
+                                <rect key="frame" x="188" y="222" width="73" height="30"/>
+                                <color key="backgroundColor" red="0.95439606899999996" green="0.75371390579999997" blue="0.34891277549999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                <state key="normal" title="장소 추가">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="addLocationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6Ux-U4-cey"/>
+                                    <segue destination="Saq-VD-5y6" kind="show" id="RES-wp-0iN"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.96848803760000002" green="0.96501356360000001" blue="0.94509655240000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="IWi-R8-VHK" firstAttribute="top" secondItem="15N-At-lFd" secondAttribute="bottom" constant="8" symbolic="YES" id="1NF-X7-RXZ"/>
+                            <constraint firstItem="luV-tz-Qvh" firstAttribute="top" secondItem="Q0b-EN-gGH" secondAttribute="bottom" constant="8" symbolic="YES" id="2b8-WZ-aRs"/>
                             <constraint firstItem="15N-At-lFd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="3bf-oB-CIZ"/>
-                            <constraint firstItem="luV-tz-Qvh" firstAttribute="top" secondItem="wgx-rH-y67" secondAttribute="bottom" constant="8" symbolic="YES" id="51N-kZ-fzm"/>
                             <constraint firstItem="dTc-VF-eKg" firstAttribute="trailing" secondItem="do0-m7-lcT" secondAttribute="trailing" id="7EP-iH-Y5P"/>
                             <constraint firstItem="rcH-gZ-RGb" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="HgT-BA-cBa"/>
-                            <constraint firstItem="wgx-rH-y67" firstAttribute="top" secondItem="15N-At-lFd" secondAttribute="bottom" constant="8" symbolic="YES" id="Lv6-AZ-R6N"/>
-                            <constraint firstItem="wgx-rH-y67" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="NnJ-IZ-CxO"/>
+                            <constraint firstItem="Q0b-EN-gGH" firstAttribute="top" secondItem="15N-At-lFd" secondAttribute="bottom" constant="8" symbolic="YES" id="QMu-E3-MoW"/>
                             <constraint firstItem="luV-tz-Qvh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="RhB-tt-aY1"/>
                             <constraint firstItem="IPH-QZ-iqO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="T35-NU-XsM"/>
                             <constraint firstItem="dTc-VF-eKg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="WDU-v4-1Hb"/>
                             <constraint firstAttribute="trailing" secondItem="15N-At-lFd" secondAttribute="trailing" id="Xy5-bQ-amJ"/>
                             <constraint firstItem="IPH-QZ-iqO" firstAttribute="top" secondItem="Vzl-sC-41L" secondAttribute="bottom" constant="8" symbolic="YES" id="Ydc-NH-8WQ"/>
-                            <constraint firstItem="do0-m7-lcT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="bbT-vM-R1B"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="rcH-gZ-RGb" secondAttribute="trailing" constant="20" id="cJe-NR-HsM"/>
                             <constraint firstItem="15N-At-lFd" firstAttribute="top" secondItem="do0-m7-lcT" secondAttribute="bottom" constant="12" id="d00-B5-nES"/>
-                            <constraint firstItem="dTc-VF-eKg" firstAttribute="top" secondItem="do0-m7-lcT" secondAttribute="bottom" constant="5" id="hWz-JZ-hhP"/>
+                            <constraint firstItem="do0-m7-lcT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="h0t-Cv-dNT"/>
                             <constraint firstItem="Vzl-sC-41L" firstAttribute="top" secondItem="luV-tz-Qvh" secondAttribute="bottom" constant="8" symbolic="YES" id="jvf-wV-pE6"/>
                             <constraint firstItem="luV-tz-Qvh" firstAttribute="trailing" secondItem="rcH-gZ-RGb" secondAttribute="trailing" id="l8p-mX-1ga"/>
                             <constraint firstItem="Vzl-sC-41L" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="n7q-3a-5Oz"/>
-                            <constraint firstItem="IWi-R8-VHK" firstAttribute="leading" secondItem="wgx-rH-y67" secondAttribute="trailing" constant="8" symbolic="YES" id="rEb-Du-vKZ"/>
+                            <constraint firstItem="Q0b-EN-gGH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="rP8-Uk-34q"/>
+                            <constraint firstItem="IWi-R8-VHK" firstAttribute="leading" secondItem="Q0b-EN-gGH" secondAttribute="trailing" constant="10" id="wA0-Da-Y3J"/>
                             <constraint firstItem="do0-m7-lcT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="x3V-xN-8wy"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="IPH-QZ-iqO" secondAttribute="trailing" constant="20" id="yQ7-Rk-6Yu"/>
                         </constraints>
@@ -205,6 +245,7 @@
                     <navigationItem key="navigationItem" id="QNy-UT-sV0"/>
                     <connections>
                         <outlet property="addLocationBtn" destination="IWi-R8-VHK" id="CGU-xr-OQy"/>
+                        <outlet property="cosmosView" destination="Q0b-EN-gGH" id="kqw-vQ-5a0"/>
                         <outlet property="imgCollectionView" destination="IPH-QZ-iqO" id="Vy9-RG-Ygp"/>
                         <outlet property="memoTextView" destination="luV-tz-Qvh" id="wR4-B2-0dZ"/>
                         <outlet property="tagCollectionView" destination="15N-At-lFd" id="KpH-r5-SOc"/>
@@ -504,6 +545,11 @@
             <point key="canvasLocation" x="-35" y="73"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="Q0b-EN-gGH">
+            <size key="intrinsicContentSize" width="158" height="30"/>
+        </designable>
+    </designables>
     <resources>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
